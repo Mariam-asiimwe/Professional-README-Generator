@@ -1,7 +1,7 @@
 import inquirer from 'inquirer';
 import fs from "fs/promises";
 
-let { title, description, contents, installation, usage, size, contributing, tests, questions } = await inquirer
+let { title, description, contents, installation, usage, size, collaborators, tests, questions } = await inquirer
   .prompt([
     {
       type: 'input',
@@ -45,16 +45,16 @@ let { title, description, contents, installation, usage, size, contributing, tes
     },
     {
       type: 'input',
-      name: 'constributing',
+      name: 'collaborators',
       message: "Provide details of any contributors to the project:",
     },
     {
       type: 'input',
       name: 'Tests',
       message: "Write tests for your project with examples:",
-      default() {
-        return '';
-      },
+      // default() {
+      //   return '';
+      // },
     },
     {
       type: 'input',
@@ -67,50 +67,62 @@ let { title, description, contents, installation, usage, size, contributing, tes
 
   ])
 
-let readmeText = `# Project Description
-  ${description}
-  
-## The second largest heading
+let readmeText = `# Project Title
   
 ${generateLicense(size)}
-
-###### The smallest heading`
-  `# List of Contents
-## The second largest heading
-###### The smallest heading`
-
-// ${ contents }
-// ${ installation }
-// ${ usage }
-// ${ contributing }
-// ${ tests }
-// ${ questions }
-fs.writeFile("README.md", readmeText)
-// console.log(response);
-
+`
+// # List of Contents
 function generateLicense(license) {
   console.log(license);
 
   if (license === "jumbo") {
     //MIT, ODbL, CC0
     return "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)"
-
-    // else if (license === "Large") {
-    //   return "[![License: ODbL](https://img.shields.io/badge/License-ODbL-brightgreen.svg)](https://opendatacommons.org/licenses/odbl/)"
+  }
+  else if (license === "large") {
+    return "[![License: ODbL](https://img.shields.io/badge/License-ODbL-brightgreen.svg)](https://opendatacommons.org/licenses/odbl/)"
 
   }
-  // else {
-  //   return "[![License: CC0-1.0](https://licensebuttons.net/l/zero/1.0/80x15.png)](http://creativecommons.org/publicdomain/zero/1.0/)"
+  else (license === "standard")
+  return "[![License: CC0-1.0](https://licensebuttons.net/l/zero/1.0/80x15.png)](http://creativecommons.org/publicdomain/zero/1.0/)"
 
-  // }
 }
-// project title (Description, Installation, Usage, Contributing, and Tests)
-// * Description
-// * Table of Contents
-// * Installation
-// * Usage
-// * License (list of options then a badge for that license is added near the top of the README)
-// * Contributing
-// * Tests
-// * Questions (GitHub username with a link to their GitHub profile,
-           //email address with instructions on how to reach them with additional questions)
+
+
+
+// fs.writeFile(
+//   "README.md",
+//   `
+//   # example 
+//   ${process.argv[2]}
+//   # license
+//   ${process.argv[3]}`,
+//   (err) => (err ? console.error(err) : console.log("Success!"))
+// # Title
+// ${title}
+// );
+
+
+fs.writeFile("README.md",
+  `## Description 
+  ${description}
+  ## Table of contents
+  ${contents}
+  ## Installation
+  ${installation}
+  ## Usage
+  ${usage}
+  ## Licenses
+  ${size}
+  ## Contributing
+  ${collaborators}
+  ## Tests
+  ${tests}
+  ## Questions
+  ${questions}
+  
+  `
+
+)
+
+
